@@ -39,6 +39,7 @@ d3.csv("assets/data/data.csv").then(function(HealthData) {
     .domain(d3.extent(HealthData, d => +d.poverty))
     .range([0, width])
 
+console.log(xScale); 
 
   const yScale = d3.scaleLinear()
     .domain([0,d3.max(HealthData, d => +d.healthcare)])
@@ -96,7 +97,7 @@ chartGroup.append("text")
       .text("Healthcare (%)");
 
 
-      // Exrtra trial
+      // Extra trial
 
 
   // Step 1: Append a div to the body to create tooltips, assign it a class
@@ -106,30 +107,20 @@ chartGroup.append("text")
 
   // Step 2: Add an onmouseover event to display a tooltip
   // ========================================================
-  chartGroup.on("mouseover", function(d,i) {
+  var state = HealthData.map(data => data.state);
+  //console.log("states", state);
+    
+
+  chartGroup.on("mouseover", function() {
     toolTip.style("display", "block");
-    toolTip.html(`State: <strong>${d => d.state[i]}</strong>`)
+    toolTip.html(`State: <strong>${state}</strong>`)
       .style("left", d3.event.pageX + "px")
       .style("top", d3.event.pageY + "px");
-  });
+  })
     // Step 3: Add an onmouseout event to make the tooltip invisible
-    .on("mouseout", function() {
+   .on("mouseout", function() {
       toolTip.style("display", "none");
     });
-
-
-
-
-
-
-var marker = svg.append('circle')
-  .attr('r', 7)
-  .style('display', 'none')
-  .style('fill', '#FFFFFF')
-  .style('pointer-events', 'none')
-  .style('stroke', '#FB5050')
-  .style('stroke-width', '3px');
-
 
 
 
