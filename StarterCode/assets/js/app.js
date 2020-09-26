@@ -113,7 +113,7 @@ chartGroup.append("text")
       .attr("y", 0 - ((margin.left / 2) + 2))
       .attr("x", 0 - (height / 2))
       .attr("transform", "rotate(-90)")
-      .text("Healthcare (%)");
+      .text("Lacks Healthcare (%)");
 
 
       // Extra trial
