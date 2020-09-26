@@ -106,9 +106,9 @@ chartGroup.append("text")
 
   // Step 2: Add an onmouseover event to display a tooltip
   // ========================================================
-  chartGroup.on("mouseover", function() {
+  chartGroup.on("mouseover", function(d,i) {
     toolTip.style("display", "block");
-    toolTip.html(`State: <strong>${HealthData, d => d.state[i]}</strong>`)
+    toolTip.html(`State: <strong>${d => d.state[i]}</strong>`)
       .style("left", d3.event.pageX + "px")
       .style("top", d3.event.pageY + "px");
   });
