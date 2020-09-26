@@ -55,6 +55,11 @@ console.log(xScale);
 chartGroup.append("g").attr("transform", `translate(0, ${height})`).call(xAxis);
 chartGroup.append("g").call(yAxis);
 
+var toolTip = d3.select("body").append("div")
+.attr("class", "tooltip");
+
+var state = HealthData.map(data => data.state);
+
 //Step 7: Scatter plot 
 chartGroup.selectAll("circle")
 .data(HealthData)
@@ -65,7 +70,21 @@ chartGroup.selectAll("circle")
 .attr("r", "10")
 .attr("stroke-width", "1")
 .classed("stateCircle", true)
-.attr("opacity", 0.75);
+.attr("opacity", 0.75)
+.on("mouseover", function() {		
+  toolTip.transition()		
+      .duration(200)		
+      .style("opacity", .9);		
+      toolTip.html(`State: <strong>${state}</strong>`)	
+      .style("left", (d3.event.pageX) + "px")		
+      .style("top", (d3.event.pageY) + "px");	
+  })					
+.on("mouseout", function() {		
+toolTip.transition()		
+      .duration(500)	
+      .style("display", "none")	
+      .style("opacity", 0);	
+});
 
 
 //Step 8: Add data to each point 
@@ -102,25 +121,41 @@ chartGroup.append("text")
 
   // Step 1: Append a div to the body to create tooltips, assign it a class
   // =======================================================
-  var toolTip = d3.select("body").append("div")
-    .attr("class", "tooltip");
+  // var toolTip = d3.select("body").append("div")
+  //   .attr("class", "tooltip");
 
-  // Step 2: Add an onmouseover event to display a tooltip
-  // ========================================================
-  var state = HealthData.map(data => data.state);
-  //console.log("states", state);
-    
+  // // Step 2: Add an onmouseover event to display a tooltip
+  // // ========================================================
+  // var state = HealthData.map(data => data.state);
+  // //console.log("states", state);
 
-  chartGroup.on("mouseover", function() {
-    toolTip.style("display", "block");
-    toolTip.html(`State: <strong>${state}</strong>`)
-      .style("left", d3.event.pageX + "px")
-      .style("top", d3.event.pageY + "px");
-  })
-    // Step 3: Add an onmouseout event to make the tooltip invisible
-   .on("mouseout", function() {
-      toolTip.style("display", "none");
-    });
+
+  // chartGroup.on("mouseover", function() {
+  //   toolTip.style("display", "block");
+  //   toolTip.html(`State: <strong>${state}</strong>`)
+  //     .style("left", d3.event.pageX + "px")
+  //     .style("top", d3.event.pageY + "px");
+  // })
+  //   // Step 3: Add an onmouseout event to make the tooltip invisible
+  //  .on("mouseout", function() {
+  //     toolTip.style("display", "none");
+  //   });
+
+//   .on("mouseover", function() {		
+//     toolTip.transition()		
+//         .duration(200)		
+//         .style("opacity", .9);		
+//         toolTip.html(`State: <strong>${state}</strong>`)	
+//         .style("left", (d3.event.pageX) + "px")		
+//         .style("top", (d3.event.pageY) + "px");	
+//     })					
+// .on("mouseout", function() {		
+//   toolTip.transition()		
+//         .duration(500)	
+//         .style("display", "none")	
+//         .style("opacity", 0);	
+// });
+
 
 
 
